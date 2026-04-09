@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إرشادات التعامل مع السكر</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+  :root {
+    --primary: #1a4a6e;
+    --accent: #0e8a6e;
+    --light-bg: #f0f6fb;
+    --border: #c5dce8;
+    --text: #1a2a35;
+    --muted: #6a8a9a;
+    --white: #ffffff;
+    --danger: #c0392b;
+    --gold: #c9952a;
+    --orange: #e07020;
+    --purple: #7b4ea0;
+    --red2: #a01010;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Tajawal', 'Segoe UI', Tahoma, Arial, sans-serif;
+    background: linear-gradient(135deg, #e8f4f8 0%, #f5f9f5 100%);
+    min-height: 100vh; color: var(--text); padding: 30px 15px 80px;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header .logo-icon { font-size: 40px; margin-bottom: 6px; display: block; }
+  .header h1 { font-size: 1.7rem; font-weight: 800; color: var(--primary); }
+  .header p { color: var(--muted); font-size: 0.93rem; margin-top: 4px; }
+  .card {
+    background: var(--white); border-radius: 16px; padding: 24px 28px;
+    box-shadow: 0 4px 20px rgba(26,74,110,0.09); border: 1px solid var(--border); margin-bottom: 18px;
+  }
+  .card-title {
+    font-size: 1rem; font-weight: 700; color: var(--primary);
+    margin-bottom: 18px; padding-bottom: 9px; border-bottom: 2px solid var(--light-bg);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group.full { grid-column: 1 / -1; }
+  label { font-size: 0.86rem; font-weight: 600; color: var(--primary); }
+  label .hint { font-weight: 400; color: var(--muted); font-size: 0.78rem; margin-right: 4px; }
+  input[type="text"], input[type="number"], input[type="date"] {
+    border: 1.5px solid var(--border); border-radius: 9px; padding: 9px 12px;
+    font-size: 0.95rem; font-family: inherit; color: var(--text); background: var(--light-bg);
+    transition: border-color 0.2s, box-shadow 0.2s; outline: none; text-align: right; width: 100%;
+  }
+  input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(14,138,110,0.12); background: #fff; }
+  input::placeholder { color: #aac; }
+  .radio-group { display: flex; gap: 10px; flex-wrap: wrap; }
+  .radio-pill {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--light-bg); border: 1.5px solid var(--border);
+    border-radius: 30px; padding: 7px 16px; cursor: pointer;
+    font-size: 0.91rem; font-weight: 500; color: var(--text);
+    transition: all 0.18s; user-select: none;
+  }
+  .radio-pill input[type="radio"] { display: none; }
+  .radio-pill.selected { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .radio-pill:hover { border-color: var(--primary); }
+
+  /* Print option toggle */
+  .print-options {
+    display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+    background: var(--light-bg); border-radius: 12px; padding: 12px 18px;
+    border: 1.5px solid var(--border); margin-bottom: 14px;
+  }
+  .toggle-wrap { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px; }
+  .toggle-wrap label { font-size: 0.88rem; font-weight: 600; color: var(--primary); cursor: pointer; }
+  .toggle {
+    position: relative; width: 42px; height: 24px; flex-shrink: 0;
+  }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute; inset: 0; background: #ccc; border-radius: 24px;
+    cursor: pointer; transition: 0.3s;
+  }
+  .slider:before {
+    content: ''; position: absolute; height: 18px; width: 18px;
+    left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.3s;
+  }
+  .toggle input:checked + .slider { background: var(--accent); }
+  .toggle input:checked + .slider:before { transform: translateX(18px); }
+
+  .btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+  button {
+    font-family: inherit; font-size: 0.97rem; font-weight: 700; border: none;
+    border-radius: 11px; padding: 12px 28px; cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s; display: flex; align-items: center; gap: 8px;
+  }
+  button:active { transform: scale(0.97); }
+  .btn-generate { background: linear-gradient(135deg, var(--primary), #1e6898); color: #fff; box-shadow: 0 4px 14px rgba(26,74,110,0.25); }
+  .btn-generate:hover { box-shadow: 0 6px 20px rgba(26,74,110,0.35); transform: translateY(-1px); }
+  .btn-print { background: linear-gradient(135deg, var(--accent), #0aa07e); color: #fff; box-shadow: 0 4px 14px rgba(14,138,110,0.25); }
+  .btn-print:hover { box-shadow: 0 6px 20px rgba(14,138,110,0.35); transform: translateY(-1px); }
+  .btn-back { background: #f0f0f0; color: var(--muted); }
+  .btn-back:hover { background: #e0e0e0; }
+
+  #output-section { display: none; }
+
+  /* ── OUTPUT CARD ── */
+  .output-card {
+    background: var(--white); border-radius: 16px; padding: 28px 34px;
+    box-shadow: 0 4px 20px rgba(26,74,110,0.09); border: 2px solid var(--border);
+    font-size: 0.88rem; line-height: 1.65; position: relative;
+  }
+  .output-header { text-align: center; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+  .output-header h2 { font-size: 1.2rem; font-weight: 800; color: var(--primary); }
+  .output-header .date-line { font-size: 0.82rem; color: var(--muted); margin-top: 3px; }
+  .info-row { display: flex; gap: 30px; flex-wrap: wrap; margin-bottom: 5px; }
+  .info-item { display: flex; gap: 5px; align-items: baseline; }
+  .info-label { color: var(--muted); font-size: 0.82rem; font-weight: 500; }
+  .info-value { font-weight: 700; color: var(--primary); }
+  .divider { border: none; border-top: 1px dashed var(--border); margin: 10px 0; }
+  .section-title { font-weight: 700; color: var(--primary); font-size: 0.9rem; margin-bottom: 7px; display: flex; align-items: center; gap: 5px; }
+  .long-acting-box {
+    background: #eaf4f0; border: 1px solid #a8d9c8; border-radius: 9px;
+    padding: 8px 14px; display: flex; align-items: center; gap: 8px; font-size: 0.88rem;
+  }
+  .isf-icr-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+  .isf-icr-item {
+    background: #f0f4fa; border: 1px solid var(--border); border-radius: 8px;
+    padding: 7px 14px; flex: 1; min-width: 160px;
+  }
+  .isf-icr-item .lbl { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
+  .isf-icr-item .val { font-size: 1rem; font-weight: 800; color: var(--primary); }
+  .instruction-block { display: flex; flex-direction: column; gap: 5px; }
+  .irow {
+    background: var(--light-bg); border-radius: 8px; padding: 7px 11px;
+    border-right: 3px solid var(--accent); font-size: 0.86rem;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .irow.c0{border-right-color:#27ae60} .irow.c1{border-right-color:var(--gold)}
+  .irow.c2{border-right-color:var(--orange)} .irow.c3{border-right-color:var(--danger)}
+  .irow.c4{border-right-color:var(--purple)} .irow.c5{border-right-color:var(--red2)}
+  .irow.cabove{border-right-color:#111;background:#fff0f0}
+  .rbadge {
+    background: var(--primary); color: #fff; border-radius: 5px;
+    padding: 1px 8px; font-size: 0.74rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+  }
+  .rbadge.c0{background:#27ae60} .rbadge.c1{background:var(--gold)}
+  .rbadge.c2{background:var(--orange)} .rbadge.c3{background:var(--danger)}
+  .rbadge.c4{background:var(--purple)} .rbadge.c5{background:var(--red2)}
+  .rbadge.cabove{background:#111}
+  .dose-hl { font-weight: 800; color: var(--primary); }
+  .eq-box {
+    background: #f7f0ff; border: 1px solid #c9b0e8; border-radius: 9px;
+    padding: 10px 16px; margin: 6px 0;
+    font-family: 'Tajawal', sans-serif; font-size: 0.92rem;
+    direction: rtl; text-align: center; color: #3a1a6e; font-weight: 600;
+  }
+  .frac {
+    display: inline-flex; flex-direction: column; align-items: center;
+    vertical-align: middle; margin: 0 3px; font-size: 0.88em; line-height: 1.15;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; text-align: center; white-space: nowrap; }
+  .frac .den { padding: 1px 4px 0; text-align: center; white-space: nowrap; }
+  .hypo-section { background: #fff8f0; border: 1px solid #f0c080; border-radius: 10px; padding: 12px 16px; margin-top: 4px; }
+  .hypo-title { font-weight: 800; color: #a05000; font-size: 0.9rem; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+  .hypo-list { list-style: none; padding: 0; }
+  .hypo-list li { padding: 3px 0; font-size: 0.86rem; display: flex; align-items: flex-start; gap: 7px; }
+  .hypo-list li::before { content: "▪"; color: #c07030; flex-shrink: 0; margin-top: 2px; }
+  .hypo-note { background: #fff0e0; border-right: 3px solid #e08030; padding: 8px 12px; border-radius: 7px; margin: 8px 0; font-size: 0.86rem; }
+  .hypo-note.green { background: #f0fff0; border-right-color: #4a9; }
+  .glucagon-box { background: #ffeaea; border: 1px solid #f0a0a0; border-radius: 9px; padding: 10px 14px; margin-top: 8px; }
+  .glucagon-title { font-weight: 800; color: var(--danger); font-size: 0.88rem; margin-bottom: 5px; }
+  .glucagon-dose { font-size: 1.15rem; font-weight: 800; color: var(--danger); }
+
+  /* Sick day page */
+  .sick-page {
+    margin-top: 10px;
+    page-break-before: always;
+  }
+  .sick-card {
+    background: #f8fcff; border: 1.5px solid #b0cfe8; border-radius: 12px; padding: 20px 26px;
+  }
+  .sick-title { font-size: 1.1rem; font-weight: 800; color: var(--primary); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #d0e8f5; text-align: center; }
+  .sick-section { margin-bottom: 12px; }
+  .sick-section-title { font-weight: 700; color: var(--primary); font-size: 0.9rem; margin-bottom: 5px; border-right: 3px solid var(--accent); padding-right: 8px; }
+  .sick-text { font-size: 0.86rem; line-height: 1.7; color: var(--text); margin-bottom: 4px; }
+  .sick-list { list-style: none; padding: 0; }
+  .sick-list li { font-size: 0.85rem; line-height: 1.65; padding: 2px 0; display: flex; align-items: flex-start; gap: 7px; }
+  .sick-list li::before { content: "◾"; color: var(--primary); flex-shrink: 0; margin-top: 2px; font-size: 0.7em; }
+  .sick-list li.sub { padding-right: 16px; }
+  .sick-list li.sub::before { content: "–"; color: var(--muted); }
+  .sick-warn { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 10px 14px; margin-top: 6px; }
+  .sick-warn-title { font-weight: 800; color: #856404; font-size: 0.88rem; margin-bottom: 5px; }
+  .sick-hosp { background: #ffeaea; border: 1px solid #f0a0a0; border-radius: 8px; padding: 10px 14px; margin-top: 8px; }
+  .sick-hosp-title { font-weight: 800; color: var(--danger); font-size: 0.88rem; margin-bottom: 5px; }
+
+  /* Designer credit – screen only */
+  .designer-credit {
+    position: fixed; bottom: 12px; left: 18px;
+    font-size: 0.82rem; color: #888; font-family: 'Tajawal', sans-serif;
+    pointer-events: none; font-weight: 500;
+  }
+
+  /* ══ PRINT STYLES ══════════════════════════════════════════════ */
+  @media print {
+    body { background: white !important; padding: 0 !important; margin: 0 !important; }
+    .card, .btn-row, .header, #form-section, .btn-row-output,
+    .designer-credit, .print-options-bar { display: none !important; }
+    #output-section { display: block !important; }
+    .output-card {
+      box-shadow: none !important; border: none !important;
+      padding: 10px 14px !important; border-radius: 0 !important;
+      font-size: 0.78rem !important; line-height: 1.5 !important;
+    }
+    .output-header { margin-bottom: 8px !important; padding-bottom: 8px !important; }
+    .output-header h2 { font-size: 1rem !important; }
+    .divider { margin: 6px 0 !important; }
+    .section-title { margin-bottom: 4px !important; font-size: 0.82rem !important; }
+    .irow { padding: 4px 8px !important; gap: 6px !important; font-size: 0.78rem !important; }
+    .isf-icr-item { padding: 5px 10px !important; }
+    .long-acting-box { padding: 5px 10px !important; font-size: 0.8rem !important; }
+    .eq-box { padding: 6px 10px !important; margin: 4px 0 !important; font-size: 0.8rem !important; }
+    .hypo-section { padding: 8px 12px !important; }
+    .hypo-note { padding: 5px 9px !important; margin: 5px 0 !important; font-size: 0.78rem !important; }
+    .hypo-list li { font-size: 0.78rem !important; }
+    .glucagon-box { padding: 7px 11px !important; margin-top: 5px !important; }
+    .instruction-block { gap: 3px !important; }
+    .info-row { margin-bottom: 3px !important; }
+    .isf-icr-row { gap: 8px !important; margin-bottom: 3px !important; }
+    .irow, .hypo-section, .glucagon-box { break-inside: avoid; }
+    /* Sick day page break */
+    .sick-page { page-break-before: always !important; }
+    .sick-card { padding: 14px 18px !important; }
+    .sick-text { font-size: 0.78rem !important; line-height: 1.6 !important; }
+    .sick-list li { font-size: 0.76rem !important; }
+    /* Light version overrides */
+    body.light-print .irow { background: white !important; }
+    body.light-print .long-acting-box { background: white !important; border-color: #999 !important; }
+    body.light-print .isf-icr-item { background: white !important; }
+    body.light-print .eq-box { background: white !important; border-color: #999 !important; }
+    body.light-print .hypo-section { background: white !important; border-color: #999 !important; }
+    body.light-print .hypo-note { background: white !important; }
+    body.light-print .hypo-note.green { background: white !important; }
+    body.light-print .glucagon-box { background: white !important; border-color: #999 !important; }
+    body.light-print .sick-card { background: white !important; border-color: #999 !important; }
+    body.light-print .sick-warn { background: white !important; border-color: #999 !important; }
+    body.light-print .sick-hosp { background: white !important; border-color: #999 !important; }
+    body.light-print .rbadge { background: white !important; color: #111 !important; border: 1px solid #555; }
+    body.light-print .output-card { border: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <span class="logo-icon">🩺</span>
+    <h1>نظام إرشادات التعامل مع السكر</h1>
+    <p>أدخل بيانات المريض لإنشاء إرشادات مخصصة</p>
+  </div>
+
+  <div id="form-section">
+
+    <div class="card">
+      <div class="card-title"><span>📅</span> التاريخ</div>
+      <div class="form-group">
+        <label>تاريخ التقرير</label>
+        <input type="date" id="report-date" />
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>👤</span> بيانات المريض</div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>اسم المريض الأول</label>
+          <input type="text" id="name" placeholder="أدخل اسم المريض الأول" />
+        </div>
+        <div class="form-group">
+          <label>العمر <span class="hint">(سنة)</span></label>
+          <input type="number" id="age" placeholder="مثال: 12" min="1" />
+        </div>
+        <div class="form-group">
+          <label>الوزن <span class="hint">(كغ)</span></label>
+          <input type="number" id="weight" placeholder="مثال: 45" min="1" step="0.1" />
+        </div>
+        <div class="form-group">
+          <label>رقم الملف <span class="hint">(MRN) — اختياري</span></label>
+          <input type="text" id="mrn" placeholder="اتركه فارغاً إن لم يكن متاحاً" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>⚙️</span> معاملات الجرعة</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>معامل تصحيح السكر <span class="hint">(ISF)</span></label>
+          <input type="number" id="isf" placeholder="مثال: 50" min="1" />
+        </div>
+        <div class="form-group">
+          <label>معامل النشويات (الكارب) <span class="hint">(ICR) — اختياري</span></label>
+          <input type="number" id="icr" placeholder="اتركه فارغاً لتخطي الحساب" min="1" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>💉</span> جرعات الأنسولين</div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>اسم الأنسولين طويل المفعول</label>
+          <div class="radio-group" id="longName-group">
+            <label class="radio-pill selected"><input type="radio" name="longName" value="تريسيبا" checked /><span>تريسيبا</span></label>
+            <label class="radio-pill"><input type="radio" name="longName" value="لانتوس" /><span>لانتوس</span></label>
+            <label class="radio-pill"><input type="radio" name="longName" value="توجيو" /><span>توجيو</span></label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>جرعة الأنسولين طويل المفعول <span class="hint">(وحدات)</span></label>
+          <input type="number" id="longDose" placeholder="مثال: 10" min="1" />
+        </div>
+        <div class="form-group">
+          <label>جرعة الأنسولين قصير المفعول قبل الوجبة <span class="hint">(وحدات)</span></label>
+          <input type="number" id="shortDose" placeholder="مثال: 4" min="1" />
+        </div>
+        <div class="form-group full">
+          <label>جرعة الـ Glucagon</label>
+          <div class="radio-group" id="glucagon-group">
+            <label class="radio-pill" id="gluc-1mg-lbl"><input type="radio" name="glucagon" value="1 mg" /><span>1 mg</span></label>
+            <label class="radio-pill" id="gluc-05mg-lbl"><input type="radio" name="glucagon" value="0.5 mg" /><span>0.5 mg</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-generate" onclick="generate()">✨ إنشاء التعليمات</button>
+      <button class="btn-back" onclick="resetForm()">↺ إعادة تعيين</button>
+    </div>
+
+  </div><!-- /form-section -->
+
+  <!-- OUTPUT -->
+  <div id="output-section">
+
+    <!-- Print options bar (screen only) -->
+    <div class="print-options-bar" style="background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:14px 20px;margin-bottom:16px;display:flex;gap:20px;flex-wrap:wrap;align-items:center;box-shadow:0 2px 10px rgba(26,74,110,0.07);">
+      <span style="font-weight:700;color:var(--primary);font-size:0.93rem;">⚙️ خيارات الطباعة</span>
+      <div class="toggle-wrap">
+        <label class="toggle"><input type="checkbox" id="lightPrint" checked onchange="applyLightPrint(this.checked)"><span class="slider"></span></label>
+        <label for="lightPrint">طباعة فاتحة (توفير الحبر)</label>
+      </div>
+      <div class="toggle-wrap">
+        <label class="toggle"><input type="checkbox" id="sickDay" onchange="toggleSickDay(this.checked)"><span class="slider"></span></label>
+        <label for="sickDay">إضافة صفحة إرشادات أيام المرض </label>
+      </div>
+    </div>
+
+    <div class="output-card" id="output-content"></div>
+
+    <!-- Sick day page (hidden by default, toggled) -->
+    <div id="sick-day-section" class="sick-page" style="display:none;">
+      <div class="sick-card">
+        <div class="sick-title">🤒 السكري أيام المرض</div>
+
+        <div class="sick-section">
+          <div class="sick-text">إن السيطرة على السكري وإبقاءه في مستويات منتظمة هدفٌ مهم لكل شَخْصٍ شُخِّص بالسكري، ولكنْ يزداد الأمر أهمية أثناء الأيام المرضية التي يكون فيها الشخص قد أصيب بأحد الأمراض (مثل: البرد أو الإنفلونزا، أو التهاب الحلق، الإصابات، أو علاج أمراض الأسنان الشديدة، أو الخضوع للجراحة، أو الضغوط النفسية).</div>
+        </div>
+
+        <div class="sick-section">
+          <div class="sick-section-title">تأثير المرض على سكر الدم</div>
+          <div class="sick-text">أثناء المرض يكون الجسم في حالة ضغط، وليتمكن من التعامل معه فإنه يفرز هرمونات تساعد في القضاء على المرض، لكن بالتالي ترفع هذه الهرمونات السكر في الدم، بالإضافة إلى تقليل مفعول الإنسولين.</div>
+        </div>
+
+        <div class="sick-section">
+          <div class="sick-section-title">قواعد التعامل مع السكري في أيام المرض</div>
+
+          <div class="sick-section-title" style="font-size:0.84rem;margin-top:6px;">الإنسولين وأدوية السكري</div>
+          <div class="sick-text">يجب الالتزام بأخذ جرعات الإنسولين حتى في وقت المرض وفق الحالات التالية:</div>
+          <ul class="sick-list">
+            <li><strong>المصاب بالنوع الأول:</strong> قد يحتاج إلى زيادة جرعة الإنسولين.</li>
+          </ul>
+
+          <div class="sick-section-title" style="font-size:0.84rem;margin-top:8px;">التغذية والسوائل</div>
+          <ul class="sick-list">
+            <li>شرب ما لا يقل عن كوب من الماء أو السوائل الخالية من السكر كل ساعة لتجنب الجفاف.</li>
+            <li>الحرص على تناول الوجبات في مواعيدها حتى وإن كان مستوى السكر مرتفعًا.</li>
+          </ul>
+
+          <div class="sick-section-title" style="font-size:0.84rem;margin-top:8px;">قياس السكر والكيتونات</div>
+          <ul class="sick-list">
+            <li>قياس السكر كل 2-٤ ساعات وتدوين النتائج.</li>
+            <li><strong>النوع الأول:</strong> قياس الكيتونات كل ٤ ساعات.</li>
+          </ul>
+
+          <div class="sick-section-title" style="font-size:0.84rem;margin-top:8px;">أدوية علاج الأعراض</div>
+          <div class="sick-text">يجب دائمًا التحقق من مكونات الدواء والتأكد من عدم احتوائها على السكر، واستشارة الطبيب أو الصيدلي قبل أخذ أي دواء إضافي.</div>
+        </div>
+
+        <div class="sick-warn">
+          <div class="sick-warn-title">⚠️ متى يجب رؤية الطبيب</div>
+          <ul class="sick-list">
+            <li>السكر أعلى من ٢٥٠ ملجم/دسل برغم الجرعة الإضافية.</li>
+            <li>استمرار السكر فوق ٢٤٠ ملجم/دسل قبل الأكل لأكثر من ٢٤ ساعة.</li>
+            <li>ظهور أعراض الحموضة الكيتونية أو الجفاف.</li>
+            <li>استمرار المرض أو الحمى لأكثر من يومين دون تحسن.</li>
+            <li>استمرار التقيؤ أو الإسهال لأكثر من ٦ ساعات.</li>
+            <li>كيتونات متوسطة أو مرتفعة في البول.</li>
+            <li>الشعور بعدم القدرة على التفكير، أو الارتباك، أو النعاس الشديد.</li>
+          </ul>
+        </div>
+
+        <div class="sick-hosp">
+          <div class="sick-hosp-title">🏥 قد يحتاج إلى التنويم في المستشفى عند:</div>
+          <ul class="sick-list">
+            <li>صعوبة البلع.</li>
+            <li>استمرار التقيؤ.</li>
+            <li>استمرار ارتفاع السكر أو الكيتونات.</li>
+            <li>وجود ألم في البطن أو صعوبة في التنفس.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div><!-- /sick-day-section -->
+
+    <div class="btn-row btn-row-output" style="margin-top:18px;">
+      <button class="btn-print" onclick="doPrint()">🖨️ طباعة / حفظ PDF</button>
+      <button class="btn-back" onclick="backToForm()">← تعديل البيانات</button>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<div class="designer-credit">Designed by Dr. Mohammed Alharithy, Diabetology Fellow</div>
+
+<script>
+// ── Init date ────────────────────────────────────────────────
+(function(){
+  const t = new Date();
+  const y=t.getFullYear(), m=String(t.getMonth()+1).padStart(2,'0'), d=String(t.getDate()).padStart(2,'0');
+  document.getElementById('report-date').value = y+'-'+m+'-'+d;
+})();
+
+// ── Radio pills ──────────────────────────────────────────────
+document.querySelectorAll('.radio-group').forEach(grp => {
+  grp.querySelectorAll('.radio-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      grp.querySelectorAll('.radio-pill').forEach(p => p.classList.remove('selected'));
+      pill.classList.add('selected');
+    });
+  });
+});
+
+// ── Auto glucagon by weight ──────────────────────────────────
+document.getElementById('weight').addEventListener('input', function(){
+  const w = parseFloat(this.value);
+  if(isNaN(w)) return;
+  const g1=document.getElementById('gluc-1mg-lbl'), g05=document.getElementById('gluc-05mg-lbl');
+  document.querySelectorAll('[name="glucagon"]').forEach(r=>r.checked=false);
+  document.querySelectorAll('#glucagon-group .radio-pill').forEach(p=>p.classList.remove('selected'));
+  if(w>=25){g1.querySelector('input').checked=true;g1.classList.add('selected');}
+  else{g05.querySelector('input').checked=true;g05.classList.add('selected');}
+});
+
+// ── Light print toggle ───────────────────────────────────────
+function applyLightPrint(on){
+  if(on) document.body.classList.add('light-print');
+  else document.body.classList.remove('light-print');
+}
+// Default: light print ON
+document.body.classList.add('light-print');
+
+// ── Sick day toggle ──────────────────────────────────────────
+function toggleSickDay(on){
+  document.getElementById('sick-day-section').style.display = on ? 'block' : 'none';
+}
+
+// ── Print ────────────────────────────────────────────────────
+function doPrint(){ window.print(); }
+
+// ── Helpers ──────────────────────────────────────────────────
+function rand10(min,max){ return min+Math.floor(Math.random()*((max-min)/10+1))*10; }
+function fmtDate(v){
+  if(!v) return '—';
+  const [y,m,d]=v.split('-');
+  const months=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+  return parseInt(d)+' '+months[parseInt(m)-1]+' '+y;
+}
+function fmtNum(n){ return Number.isInteger(n)?n:n.toFixed(2); }
+function roundHalf(n){ return Math.floor(n+0.5); }
+function frac(num,den){
+  return `<span class="frac"><span class="num">${num}</span><span class="den">${den}</span></span>`;
+}
+
+// ── Generate ─────────────────────────────────────────────────
+function generate(){
+  const dateVal  = document.getElementById('report-date').value;
+  const name     = document.getElementById('name').value.trim();
+  const age      = document.getElementById('age').value.trim();
+  const weight   = parseFloat(document.getElementById('weight').value);
+  const mrn      = document.getElementById('mrn').value.trim();
+  const isf      = parseFloat(document.getElementById('isf').value);
+  const icrRaw   = document.getElementById('icr').value.trim();
+  const icr      = icrRaw===''?null:parseFloat(icrRaw);
+  const longName = document.querySelector('[name="longName"]:checked')?.value||'تريسيبا';
+  const longDose = document.getElementById('longDose').value.trim();
+  const shortDose= parseFloat(document.getElementById('shortDose').value);
+  const glucagon = document.querySelector('[name="glucagon"]:checked')?.value||(weight>=25?'1 mg':'0.5 mg');
+
+  if(!name||!age||isNaN(weight)||isNaN(isf)||!longDose||isNaN(shortDose)){
+    alert('⚠️ يرجى ملء جميع الحقول المطلوبة (ICR اختياري).');
+    return;
+  }
+
+  // Build sugar rows
+  const colors=['c0','c1','c2','c3','c4','c5'];
+  const emojis=['🟢','🟡','🟠','🔴','🟣','⚫'];
+  let rows=[];
+  rows.push({low:70,high:130,dose:shortDose,ci:0});
+  for(let n=1;n<=20;n++){
+    const low=(n===1)?131:130+isf*(n-1)+1;
+    const high=130+isf*n;
+    const ci=Math.min(n,colors.length-1);
+    rows.push({low,high,dose:shortDose+n,ci});
+    if(high>=399) break;
+  }
+  const lastRow=rows[rows.length-1];
+  const aboveDose=lastRow.dose+1;
+
+  const rowsHTML=rows.map(r=>`
+    <div class="irow ${colors[r.ci]}">
+      <span class="rbadge ${colors[r.ci]}">${emojis[r.ci]} ${r.low}–${r.high}</span>
+      <span>إذا كان السكر بين <strong>${r.low}</strong> و <strong>${r.high}</strong> ← نعطي ${name}: <span class="dose-hl">${r.dose} وحدات</span> قبل الوجبة بـ 10–15 دقيقة</span>
+    </div>`).join('')+`
+    <div class="irow cabove">
+      <span class="rbadge cabove">⚫ أكثر من ${lastRow.high}</span>
+      <span>إذا كان السكر أكثر من <strong>${lastRow.high}</strong> ← نعطي ${name}: <span class="dose-hl">${aboveDose} وحدات</span> قبل الوجبة بـ 10–15 دقيقة</span>
+    </div>`;
+
+  // Corrective dose
+  const bg1=rand10(250,450);
+  const corrRaw=(bg1-120)/isf;
+  const corrDose=roundHalf(corrRaw);
+  const correctiveHTML=`
+    <hr class="divider">
+    <div class="section-title">🔢 الجرعة التصحيحية (بعد الوجبة بـ 3 ساعات) إذا كان السكر أكثر من 250</div>
+    <div class="eq-box">الجرعة التصحيحية = ${frac('قياس سكر الدم − 120','معامل التصحيح')}</div>
+    <p style="margin:5px 0;font-size:0.84rem;">مثال: إذا كان سكر الدم <strong>${bg1}</strong>:</p>
+    <div class="eq-box">= ${frac(bg1+' − 120',isf)} = ${fmtNum(corrRaw)} ≈ <strong>${corrDose} وحدات</strong></div>`;
+
+  // Carb section
+  let carbHTML='';
+  if(icr!==null){
+    const bg2=rand10(250,450), carb=rand10(30,60);
+    const cPart=(bg2-120)/isf, kPart=carb/icr;
+    const totalRaw=cPart+kPart, total=roundHalf(totalRaw);
+    carbHTML=`
+      <hr class="divider">
+      <div class="section-title">🍞 جرعة الأنسولين قصير المفعول قبل الوجبة بناءً على الكارب</div>
+      <div class="eq-box">الجرعة = ${frac('سكر الدم − 120','معامل التصحيح')} + ${frac('كمية النشويات (الكارب)','معامل النشويات (الكارب)')}</div>
+      <p style="margin:5px 0;font-size:0.84rem;">مثال: سكر الدم <strong>${bg2}</strong>، كارب الوجبة <strong>${carb} جرام</strong>:</p>
+      <div class="eq-box">= ${frac(bg2+' − 120',isf)} + ${frac(carb,icr)} = ${fmtNum(cPart)} + ${fmtNum(kPart)} ≈ <strong>${total} وحدات</strong></div>`;
+  }
+
+  // Hypo section
+  const hypoHTML=`
+    <hr class="divider">
+    <div class="hypo-section">
+      <div class="hypo-title">⚠️ التعامل مع هبوط السكر</div>
+      <p style="font-size:0.84rem;margin-bottom:7px;">في حال وجود أعراض هبوط السكر (دوخة، تعرق، جوع، رعشة، خفقان، عصبية) أو انخفاض في الحساس (أقل من 70)، تأكد من صحة القراءة عن طريق الوخز.</p>
+      <div class="hypo-note"><strong>إذا كان السكر أقل من 70 والطفل في وعيه</strong> ← وجبة 15 جرام كارب:</div>
+      <ul class="hypo-list">
+        <li>علبة عصير 125 مل (سنتوب أو ربيع صغير)</li>
+        <li>أو ثلاث حبات تمر</li>
+        <li>أو ملعقة عسل صغيرة</li>
+        <li>أو ملعقة طعام سكر مذاب في كأس ماء</li>
+      </ul>
+      <div class="hypo-note" style="margin-top:7px;">يُقاس السكر بعد <strong>15 دقيقة</strong>. إذا كان لا يزال تحت 70 تُكرَّر العملية حتى 3 مرات. إذا لم يتحسن بعد المرة الثالثة ← <strong>أقرب طوارئ</strong>.</div>
+      <div class="hypo-note green">إذا تحسّن السكر ← وجبة تثبيت صغيرة مثل (قطعة توست أو كأس حليب).</div>
+      <div class="glucagon-box">
+        <div class="glucagon-title">🚨 إذا كان الطفل غائب عن الوعي أو في حال حدوث تشنجات:</div>
+        <p style="font-size:0.82rem;margin-bottom:4px;">إبرة الحياة <strong>(Glucagon)</strong> في العضل بجرعة:</p>
+        <div class="glucagon-dose">${glucagon}</div>
+      </div>
+    </div>`;
+
+  document.getElementById('output-content').innerHTML=`
+    <div class="output-header">
+      <h2>إرشادات التعامل مع السكر لـ ${name}</h2>
+      <div class="date-line">📅 التاريخ: ${fmtDate(dateVal)}</div>
+    </div>
+    <div class="info-row">
+      <div class="info-item"><span class="info-label">العمر:</span><span class="info-value">${age} سنة</span></div>
+      <div class="info-item"><span class="info-label">الوزن:</span><span class="info-value">${weight} كغ</span></div>
+      ${mrn ? `<div class="info-item"><span class="info-label">رقم الملف (MRN):</span><span class="info-value">${mrn}</span></div>` : ''}
+    </div>
+    <hr class="divider">
+    <div class="isf-icr-row">
+      <div class="isf-icr-item"><div class="lbl">معامل تصحيح السكر (ISF)</div><div class="val">${isf}</div></div>
+      <div class="isf-icr-item"><div class="lbl">معامل تصحيح الكارب (ICR)</div><div class="val">${icr!==null?icr:'—'}</div></div>
+    </div>
+    <hr class="divider">
+    <div class="section-title">🔵 الأنسولين طويل المفعول</div>
+    <div class="long-acting-box"><span>🧪</span><span>جرعة <strong>${longName}</strong>: <span class="dose-hl">${longDose} وحدات</span> — مرة واحدة يومياً</span></div>
+    <hr class="divider">
+    <div class="section-title">⚡ الأنسولين قصير المفعول — حسب قياس السكر قبل الوجبة</div>
+    <div class="instruction-block">${rowsHTML}</div>
+    ${correctiveHTML}${carbHTML}${hypoHTML}
+  `;
+
+  document.getElementById('form-section').style.display='none';
+  document.getElementById('output-section').style.display='block';
+  // Reset sick day toggle
+  document.getElementById('sickDay').checked=false;
+  document.getElementById('sick-day-section').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function backToForm(){
+  document.getElementById('output-section').style.display='none';
+  document.getElementById('form-section').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function resetForm(){
+  ['name','age','weight','mrn','isf','icr','longDose','shortDose'].forEach(id=>document.getElementById(id).value='');
+  document.querySelectorAll('[name="longName"]')[0].checked=true;
+  document.querySelectorAll('#longName-group .radio-pill').forEach((l,i)=>l.classList.toggle('selected',i===0));
+  document.querySelectorAll('[name="glucagon"]').forEach(r=>r.checked=false);
+  document.querySelectorAll('#glucagon-group .radio-pill').forEach(l=>l.classList.remove('selected'));
+  document.getElementById('name').focus();
+}
+</script>
+</body>
+</html>
